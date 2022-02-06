@@ -55,9 +55,11 @@ This is what the deployment will look like in Argocd for local-cluster.
 ## Common best practices
 1. Keep custom resources and their instances in seperate packages, otherwise race conditions might be encountered.
 2. Keep common resources in the base file, always ask yourself will this resource be reused? before placing it outside of the base file.
-3. Organize your resources by kind, using the following naming convention: lowercase-hypenated.yaml (e.g., horizontal-pod-autoscaler.yaml). Place services in the service.yaml file.
+3. Organize your resources by kind, place services in the service.yaml file, pvc in pvc.yaml etc... (stick to small letters seperated by -).
 4. Stick to the standard directory structure! using bases/ for base files and overlays/ for environment-specific files.
 5. While developing or before pushing to git, run kubectl kustomize cfg fmt file_name to format the file and set the indentation right.
+6. When using a complex base, you are encouraged to use subfolders to create a more organized and logical seperation. 
+7. Cluster scoped resources can be ambigous in where to place them, **consult with people** and decide based on their affinity. Cluster resources which are Openshift/Kubernetes native will be cluster scoped, operator resources with clear attachment and affinity to their operator will be placed with the operator.
 
 ## The philosophy
 Kustomize is very much like kubernetes, totally declarative, whatever you wrote that you want is what the system will give it to you. Similarly to Docker so does Kustomize work with layers, enabling you to create a base and add on top of the previous layers thus saving adding complexity to your configuration.
